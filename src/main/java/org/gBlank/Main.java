@@ -21,6 +21,8 @@ public class Main {
             System.out.println("2 - Показати всі заявки");
             System.out.println("3 - Змінити статус заявки");
             System.out.println("4 - Показати інформацію про користувача за ID заявки");
+            System.out.println("5 - Видалити заявку за ID");
+            System.out.println("6 - Показати заявку за ID");
             System.out.println("0 - Вийти");
             System.out.print("Ваш вибір: ");
             String choice = sc.nextLine();
@@ -63,6 +65,12 @@ public class Main {
                     System.out.print("Введіть ID заявки: ");
                     UUID idToFind = UUID.fromString(sc.nextLine());
                     service.getUserInfoByRequestId(idToFind);
+                    break;
+
+                case "5":
+                    System.out.print("Введіть ID заявки: ");
+                    UUID idToDelete = UUID.fromString(sc.nextLine());
+                    service.removeRequest(idToDelete);
                     break;
 
                 case "0":

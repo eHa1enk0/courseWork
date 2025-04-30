@@ -34,23 +34,39 @@ public class RequestService {
                 System.out.println("Статус заявки: " + request.getStatus());
                 System.out.println("Опис: " + request.getDescription());
                 System.out.println("Дата створення: " + request.getCreatedAt());
+                System.out.println("----------------------------------------");
             }
         }
     }
 
     public void getUserInfoByRequestId(UUID id) {
-        Request request = findById(id);
-        if (request == null) {
-            User user = request.getUser();
-            System.out.println("Інформація про користувача: ");
-            System.out.println("Ім'я: " + user.getName());
-            System.out.println("Прізвище: " + user.getSurname());
-            System.out.println("Вік: " + user.getAge());
-            System.out.println("Електронна пошта: " + user.getEmail());
-        } else {
-            System.out.println("Заявка з таким ID не знайдено.");
+        for (Request request : requests) {
+            if (request.getId().equals(id)) {
+                User user = request.getUser();
+                System.out.println("Інформація про користувача: ");
+                System.out.println("Ім'я: " + user.getName());
+                System.out.println("Прізвище: " + user.getSurname());
+                System.out.println("Вік: " + user.getAge());
+                System.out.println("Електронна пошта: " + user.getEmail());
+            } else {
+                System.out.println("Заявка з таким ID не знайдено.");
+            }
         }
     }
+
+//    public void getUserInfoByRequestId(UUID id) {
+//        Request request = findById(id);
+//        if (request == null) {
+//            User user = request.getUser();
+//            System.out.println("Інформація про користувача: ");
+//            System.out.println("Ім'я: " + user.getName());
+//            System.out.println("Прізвище: " + user.getSurname());
+//            System.out.println("Вік: " + user.getAge());
+//            System.out.println("Електронна пошта: " + user.getEmail());
+//        } else {
+//            System.out.println("Заявка з таким ID не знайдено.");
+//        }
+//    }
 
     public void changeStatus(UUID id, Status status) {
         for (Request request : requests) {
@@ -63,12 +79,23 @@ public class RequestService {
         System.out.println("Заявка з таким ID не знайдено.");
     }
 
-    public Request findById(UUID id) {
+    public void removeRequest(UUID id) {
         for (Request request : requests) {
             if (request.getId().equals(id)) {
-                return request;
+                requests.remove(request);
+                System.out.println("Заявку видалено");
+                return;
             }
         }
-        return null;
+        System.out.println("Заявка з таким ID не знайдено.");
     }
+
+//    public Request findById(UUID id) {
+//        for (Request request : requests) {
+//            if (request.getId().equals(id)) {
+//                return request;
+//            }
+//        }
+//        return null;
+//    }
 }
