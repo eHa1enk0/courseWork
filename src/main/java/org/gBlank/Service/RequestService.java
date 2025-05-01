@@ -19,15 +19,15 @@ public class RequestService {
 
     public void addRequest(Request request) {
         requests.add(request);
-        System.out.println("Заявку додано, її ID:  " + request.getId());
+        System.out.println("\nЗаявку додано, її ID:  " + request.getId());
     }
 
     public void getRequests() {
         if (requests.isEmpty()) {
-            System.out.println("Список заявок пустий.");
+            System.out.println("\nСписок заявок пустий.");
         } else {
             for (Request request : requests) {
-                System.out.println("ID: " + request.getId());
+                System.out.println("\nID: " + request.getId());
                 System.out.println("Ім'я: " + request.getUser().getName());
                 System.out.println("Прізвище: " + request.getUser().getSurname());
                 System.out.println("Вік: " + request.getUser().getAge());
@@ -39,63 +39,64 @@ public class RequestService {
         }
     }
 
-    public void getUserInfoByRequestId(UUID id) {
+    public void getRequestsById(String id) {
+        for (Request request : requests) {
+            if (request.getId().equals(id)) {
+                System.out.println("\nID: " + request.getId());
+                System.out.println("Ім'я: " + request.getUser().getName());
+                System.out.println("Прізвище: " + request.getUser().getSurname());
+                System.out.println("Вік: " + request.getUser().getAge());
+                System.out.println("Статус заявки: " + request.getStatus());
+                System.out.println("Опис: " + request.getDescription());
+                System.out.println("Дата створення: " + request.getCreatedAt());
+                System.out.println("----------------------------------------");
+            } else {
+                System.out.println("Заявка з таким ID не знайдено.");
+                System.out.println("----------------------------------------");
+            }
+        }
+    }
+
+    public void getUserInfoByRequestId(String id) {
         for (Request request : requests) {
             if (request.getId().equals(id)) {
                 User user = request.getUser();
-                System.out.println("Інформація про користувача: ");
+                System.out.println("\nІнформація про користувача: ");
                 System.out.println("Ім'я: " + user.getName());
                 System.out.println("Прізвище: " + user.getSurname());
                 System.out.println("Вік: " + user.getAge());
                 System.out.println("Електронна пошта: " + user.getEmail());
+                System.out.println("----------------------------------------");
             } else {
                 System.out.println("Заявка з таким ID не знайдено.");
+                System.out.println("----------------------------------------");
             }
         }
     }
 
-//    public void getUserInfoByRequestId(UUID id) {
-//        Request request = findById(id);
-//        if (request == null) {
-//            User user = request.getUser();
-//            System.out.println("Інформація про користувача: ");
-//            System.out.println("Ім'я: " + user.getName());
-//            System.out.println("Прізвище: " + user.getSurname());
-//            System.out.println("Вік: " + user.getAge());
-//            System.out.println("Електронна пошта: " + user.getEmail());
-//        } else {
-//            System.out.println("Заявка з таким ID не знайдено.");
-//        }
-//    }
-
-    public void changeStatus(UUID id, Status status) {
+    public void changeStatus(String id, Status status) {
         for (Request request : requests) {
             if (request.getId().equals(id)) {
                 request.setStatus(status);
-                System.out.println("Статус оновлено.");
+                System.out.println("\nСтатус оновлено.");
+                System.out.println("----------------------------------------");
                 return;
             }
         }
-        System.out.println("Заявка з таким ID не знайдено.");
+        System.out.println("\nЗаявка з таким ID не знайдено.");
+        System.out.println("----------------------------------------");
     }
 
-    public void removeRequest(UUID id) {
+    public void removeRequest(String id) {
         for (Request request : requests) {
             if (request.getId().equals(id)) {
                 requests.remove(request);
-                System.out.println("Заявку видалено");
+                System.out.println("\nЗаявку видалено");
+                System.out.println("----------------------------------------");
                 return;
             }
         }
-        System.out.println("Заявка з таким ID не знайдено.");
+        System.out.println("\nЗаявка з таким ID не знайдено.");
+        System.out.println("----------------------------------------");
     }
-
-//    public Request findById(UUID id) {
-//        for (Request request : requests) {
-//            if (request.getId().equals(id)) {
-//                return request;
-//            }
-//        }
-//        return null;
-//    }
 }

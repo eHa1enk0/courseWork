@@ -21,8 +21,8 @@ public class Main {
             System.out.println("2 - Показати всі заявки");
             System.out.println("3 - Змінити статус заявки");
             System.out.println("4 - Показати інформацію про користувача за ID заявки");
-            System.out.println("5 - Видалити заявку за ID");
-            System.out.println("6 - Показати заявку за ID");
+            System.out.println("5 - Видалити заявку за її ID");
+            System.out.println("6 - Показати заявку за її ID");
             System.out.println("0 - Вийти");
             System.out.print("Ваш вибір: ");
             String choice = sc.nextLine();
@@ -55,7 +55,7 @@ public class Main {
 
                 case "3":
                     System.out.print("Введіть ID заявки: ");
-                    UUID idToUpdate = UUID.fromString(sc.nextLine());
+                    String idToUpdate = sc.nextLine();
                     System.out.println("Оберіть новий статус: NEW, IN_PROGRESS, COMPLETED, FAILED");
                     Status newStatus = Status.valueOf(sc.nextLine().toUpperCase());
                     service.changeStatus(idToUpdate, newStatus);
@@ -63,14 +63,20 @@ public class Main {
 
                 case "4":
                     System.out.print("Введіть ID заявки: ");
-                    UUID idToFind = UUID.fromString(sc.nextLine());
+                    String idToFind = sc.nextLine();
                     service.getUserInfoByRequestId(idToFind);
                     break;
 
                 case "5":
                     System.out.print("Введіть ID заявки: ");
-                    UUID idToDelete = UUID.fromString(sc.nextLine());
+                    String idToDelete = sc.nextLine();
                     service.removeRequest(idToDelete);
+                    break;
+
+                case "6":
+                    System.out.print("Введіть ID заявки: ");
+                    String idToFindReqById = sc.nextLine();
+                    service.getRequestsById(idToFindReqById);
                     break;
 
                 case "0":
