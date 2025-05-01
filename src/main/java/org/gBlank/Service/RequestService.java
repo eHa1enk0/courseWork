@@ -6,12 +6,15 @@ import org.gBlank.Entity.Request;
 import org.gBlank.Entity.User;
 import org.gBlank.Entity.Status;
 
+import java.text.DateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
 
 @Getter @Setter
 public class RequestService {
     private List<Request> requests;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public RequestService(List<Request> requests) {
         this.requests = requests;
@@ -33,7 +36,7 @@ public class RequestService {
                 System.out.println("Вік: " + request.getUser().getAge());
                 System.out.println("Статус заявки: " + request.getStatus());
                 System.out.println("Опис: " + request.getDescription());
-                System.out.println("Дата створення: " + request.getCreatedAt());
+                System.out.println("Дата створення: " + request.getCreatedAt().format(formatter));
                 System.out.println("----------------------------------------");
             }
         }
@@ -48,7 +51,7 @@ public class RequestService {
                 System.out.println("Вік: " + request.getUser().getAge());
                 System.out.println("Статус заявки: " + request.getStatus());
                 System.out.println("Опис: " + request.getDescription());
-                System.out.println("Дата створення: " + request.getCreatedAt());
+                System.out.println("Дата створення: " + request.getCreatedAt().format(formatter));
                 System.out.println("----------------------------------------");
             } else {
                 System.out.println("Заявка з таким ID не знайдено.");
