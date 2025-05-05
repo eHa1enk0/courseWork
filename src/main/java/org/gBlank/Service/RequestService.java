@@ -69,6 +69,7 @@ public class RequestService {
                 System.out.println("Прізвище: " + user.getSurname());
                 System.out.println("Вік: " + user.getAge());
                 System.out.println("Електронна пошта: " + user.getEmail());
+                System.out.println("Дата створення: " + user.getCreatedAt().format(formatter));
                 System.out.println("----------------------------------------");
             } else {
                 System.out.println("Заявка з таким ID не знайдено.");
