@@ -1,20 +1,20 @@
-package org.gBlank.Service;
+package org.gBlank.service;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.gBlank.Entity.Request;
-import org.gBlank.Entity.User;
-import org.gBlank.Entity.Status;
+import org.gBlank.entity.Request;
+import org.gBlank.entity.User;
+import org.gBlank.entity.Status;
 
-import java.text.DateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.UUID;
 
-@Getter @Setter
+@Getter
+@Setter
+
 public class RequestService {
     private List<Request> requests;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public RequestService(List<Request> requests) {
         this.requests = requests;

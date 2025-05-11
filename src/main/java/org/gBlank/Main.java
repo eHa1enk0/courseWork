@@ -1,9 +1,9 @@
 package org.gBlank;
 
-import org.gBlank.Entity.Request;
-import org.gBlank.Entity.Status;
-import org.gBlank.Entity.User;
-import org.gBlank.Service.RequestService;
+import org.gBlank.entity.Request;
+import org.gBlank.entity.Status;
+import org.gBlank.entity.User;
+import org.gBlank.service.RequestService;
 
 import java.util.ArrayList;
 import java.util.List;

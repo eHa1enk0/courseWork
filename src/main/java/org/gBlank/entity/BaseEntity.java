@@ -1,4 +1,4 @@
-package org.gBlank.Entity;
+package org.gBlank.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,8 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 import java.util.Random;
 
-@Getter @Setter
+@Getter
+@Setter
 
 public class BaseEntity {
     private LocalDateTime createdAt;

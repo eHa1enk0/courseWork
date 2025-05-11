@@ -1,10 +1,11 @@
-package org.gBlank.Entity;
+package org.gBlank.entity;
 
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 
 public class Request extends BaseEntity {
     private Status status;
