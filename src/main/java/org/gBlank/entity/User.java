@@ -1,11 +1,11 @@
-package org.gBlank.Entity;
+package org.gBlank.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+@Getter
+@Setter
 
-@Getter @Setter
 public class User extends BaseEntity {
     private String name;
     private String surname;
