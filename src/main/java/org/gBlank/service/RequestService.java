@@ -8,60 +8,60 @@ import org.gBlank.entity.Status;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Getter
 @Setter
 
 public class RequestService {
-    private List<Request> requests;
+    private Map<String, Request> requestsMap;
+    private List<Request> requestsList;
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-    public RequestService(List<Request> requests) {
-        this.requests = requests;
+    public RequestService(Map<String, Request> requestsMap, List<Request> requestsList) {
+        this.requestsMap = requestsMap;
+        this.requestsList = requestsList;
     }
 
     public void addRequest(Request request) {
-        requests.add(request);
+        requestsMap.put(request.getId(), request);
+        requestsList.add(request);
         System.out.println("\nЗаявку додано, її ID:  " + request.getId());
     }
 
-    public void getRequests() {
-        if (requests.isEmpty()) {
+    private void printRequest(Request request) {
+        System.out.println("\nID: " + request.getId());
+        System.out.println("Ім'я: " + request.getUser().getName());
+        System.out.println("Прізвище: " + request.getUser().getSurname());
+        System.out.println("Вік: " + request.getUser().getAge());
+        System.out.println("Статус заявки: " + request.getStatus());
+        System.out.println("Опис: " + request.getDescription());
+        System.out.println("Дата створення: " + request.getCreatedAt().format(formatter));
+        System.out.println("----------------------------------------");
+    }
+
+    public void getRequest() {
+        if (requestsList.isEmpty()) {
             System.out.println("\nСписок заявок пустий.");
         } else {
-            for (Request request : requests) {
-                System.out.println("\nID: " + request.getId());
-                System.out.println("Ім'я: " + request.getUser().getName());
-                System.out.println("Прізвище: " + request.getUser().getSurname());
-                System.out.println("Вік: " + request.getUser().getAge());
-                System.out.println("Статус заявки: " + request.getStatus());
-                System.out.println("Опис: " + request.getDescription());
-                System.out.println("Дата створення: " + request.getCreatedAt().format(formatter));
-                System.out.println("----------------------------------------");
+            for (Request request : requestsList) {
+                printRequest(request);
             }
         }
     }
 
     public void getRequestsById(String id) {
-        for (Request request : requests) {
-            if (request.getId().equals(id)) {
-                System.out.println("\nID: " + request.getId());
-                System.out.println("Ім'я: " + request.getUser().getName());
-                System.out.println("Прізвище: " + request.getUser().getSurname());
-                System.out.println("Вік: " + request.getUser().getAge());
-                System.out.println("Статус заявки: " + request.getStatus());
-                System.out.println("Опис: " + request.getDescription());
-                System.out.println("Дата створення: " + request.getCreatedAt().format(formatter));
-                System.out.println("----------------------------------------");
-            } else {
-                System.out.println("Заявка з таким ID не знайдено.");
-                System.out.println("----------------------------------------");
-            }
+        Request request = requestsMap.get(id);
+        if (request != null) {
+            printRequest(request);
+        } else {
+            System.out.println("Заявка з таким ID не знайдено.");
+            System.out.println("----------------------------------------");
         }
     }
 
     public void getUserInfoByRequestId(String id) {
-        for (Request request : requests) {
+        for (Request request : requestsList) {
             if (request.getId().equals(id)) {
                 User user = request.getUser();
                 System.out.println("\nІнформація про користувача: ");
@@ -79,7 +79,7 @@ public class RequestService {
     }
 
     public void changeStatus(String id, Status status) {
-        for (Request request : requests) {
+        for (Request request : requestsList) {
             if (request.getId().equals(id)) {
                 request.setStatus(status);
                 System.out.println("\nСтатус оновлено.");
@@ -92,9 +92,9 @@ public class RequestService {
     }
 
     public void removeRequest(String id) {
-        for (Request request : requests) {
+        for (Request request : requestsList) {
             if (request.getId().equals(id)) {
-                requests.remove(request);
+                requestsList.remove(request);
                 System.out.println("\nЗаявку видалено");
                 System.out.println("----------------------------------------");
                 return;

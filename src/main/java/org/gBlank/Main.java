@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         List<Request> requests = new ArrayList<>();
-        RequestService service = new RequestService(requests);
+        RequestService service = new RequestService(request);
 
         while (true) {
             System.out.println("\n1 - Додати заявку");
@@ -49,7 +49,7 @@ public class Main {
                     break;
 
                 case "2":
-                    service.getRequests();
+                    service.getRequestsList();
                     break;
 
                 case "3":
