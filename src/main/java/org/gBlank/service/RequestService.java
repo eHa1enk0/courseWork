@@ -7,7 +7,6 @@ import org.gBlank.entity.User;
 import org.gBlank.entity.Status;
 
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -15,17 +14,14 @@ import java.util.Map;
 
 public class RequestService {
     private Map<String, Request> requestsMap;
-    private List<Request> requestsList;
     private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
-    public RequestService(Map<String, Request> requestsMap, List<Request> requestsList) {
+    public RequestService(Map<String, Request> requestsMap) {
         this.requestsMap = requestsMap;
-        this.requestsList = requestsList;
     }
 
     public void addRequest(Request request) {
         requestsMap.put(request.getId(), request);
-        requestsList.add(request);
         System.out.println("\nЗаявку додано, її ID:  " + request.getId());
     }
 
@@ -40,11 +36,11 @@ public class RequestService {
         System.out.println("----------------------------------------");
     }
 
-    public void getRequest() {
-        if (requestsList.isEmpty()) {
+    public void getRequests() {
+        if (requestsMap.isEmpty()) {
             System.out.println("\nСписок заявок пустий.");
         } else {
-            for (Request request : requestsList) {
+            for (Request request : requestsMap.values()) {
                 printRequest(request);
             }
         }
@@ -61,8 +57,8 @@ public class RequestService {
     }
 
     public void getUserInfoByRequestId(String id) {
-        for (Request request : requestsList) {
-            if (request.getId().equals(id)) {
+            Request request = requestsMap.get(id);
+            if (request != null) {
                 User user = request.getUser();
                 System.out.println("\nІнформація про користувача: ");
                 System.out.println("Ім'я: " + user.getName());
@@ -75,32 +71,26 @@ public class RequestService {
                 System.out.println("Заявка з таким ID не знайдено.");
                 System.out.println("----------------------------------------");
             }
-        }
     }
 
     public void changeStatus(String id, Status status) {
-        for (Request request : requestsList) {
-            if (request.getId().equals(id)) {
-                request.setStatus(status);
-                System.out.println("\nСтатус оновлено.");
-                System.out.println("----------------------------------------");
-                return;
-            }
+        Request request = requestsMap.get(id);
+        if (request != null) {
+            request.setStatus(status);
+            System.out.println("\nСтатус оновлено.");
+        } else {
+            System.out.println("\nЗаявка з таким ID не знайдено.");
         }
-        System.out.println("\nЗаявка з таким ID не знайдено.");
         System.out.println("----------------------------------------");
     }
 
     public void removeRequest(String id) {
-        for (Request request : requestsList) {
-            if (request.getId().equals(id)) {
-                requestsList.remove(request);
-                System.out.println("\nЗаявку видалено");
-                System.out.println("----------------------------------------");
-                return;
-            }
+        Request request = requestsMap.remove(id);
+        if (request != null) {
+            System.out.println("\nЗаявку видалено");
+        } else {
+            System.out.println("\nЗаявка з таким ID не знайдено.");
         }
-        System.out.println("\nЗаявка з таким ID не знайдено.");
         System.out.println("----------------------------------------");
     }
 }
