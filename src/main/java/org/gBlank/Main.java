@@ -5,15 +5,13 @@ import org.gBlank.entity.Status;
 import org.gBlank.entity.User;
 import org.gBlank.service.RequestService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        List<Request> requests = new ArrayList<>();
-        RequestService service = new RequestService(requests);
+        Map<String, Request> requestsMap = new HashMap<>();
+        RequestService service = new RequestService(requestsMap);
 
         while (true) {
             System.out.println("\n1 - Додати заявку");
