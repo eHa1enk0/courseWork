@@ -10,9 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class RequestService {
-    private RequestDAO requestDAO;
-    private UserDAO userDAO;
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+    private final RequestDAO requestDAO;
+    private final UserDAO userDAO;
+    private final static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
     public RequestService(RequestDAO requestDAO, UserDAO userDAO) {
         this.requestDAO = requestDAO;
@@ -20,6 +20,36 @@ public class RequestService {
     }
 
     public void addRequest(Request request) {
+        boolean validData = false;
+        while (!validData) {
+            if (request.getUser().getName() == null || request.getUser().getName().trim().isEmpty() || !isAlpha(request.getUser().getName())) {
+                System.out.println("Помилка: введено некоректне ім'я.");
+                return;
+            }
+
+            if (request.getUser().getSurname() == null || request.getUser().getSurname().trim().isEmpty() || !isAlpha(request.getUser().getSurname())) {
+                System.out.println("Помилка: введено некоректне прізвище");
+                return;
+            }
+
+            if (request.getUser().getEmail() == null || request.getUser().getEmail().trim().isEmpty() || !isValidEmail(request.getUser().getEmail())) {
+                System.out.println("Помилка: Невалідний email.");
+                return;
+            }
+
+            if (request.getUser().getAge() < 1 || request.getUser().getAge() > 100) {
+                System.out.println("Помилка: введено некоректний вік.");
+                return;
+            }
+
+            if (request.getDescription() == null || request.getDescription().trim().isEmpty()) {
+                System.out.println("Помилка: Опис заявки не може бути порожнім.");
+                return;
+            }
+
+            // Якщо всі перевірки пройдені
+            validData = true;
+        }
         userDAO.saveUser(request.getUser());
         requestDAO.saveRequest(request);
         System.out.println("\nЗаявку додано, її id: " + request.getId());
@@ -94,5 +124,14 @@ public class RequestService {
             System.out.println("\nЗаявка з таким ID не знайдено.");
         }
         System.out.println("----------------------------------------");
+    }
+
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
+
+    private boolean isAlpha(String str) {
+        return str != null && str.matches("[a-zA-Z]+");
     }
 }
