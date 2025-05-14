@@ -1,19 +1,23 @@
 package org.gBlank;
 
 import org.gBlank.DataBase.DatabaseInitializer;
+import org.gBlank.dao.RequestDAO;
+import org.gBlank.dao.UserDAO;
 import org.gBlank.entity.Request;
 import org.gBlank.entity.Status;
 import org.gBlank.entity.User;
 import org.gBlank.service.RequestService;
 
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         DatabaseInitializer.initialize();
         Scanner sc = new Scanner(System.in);
-        Map<String, Request> requestsMap = new HashMap<>();
-        RequestService service = new RequestService(requestsMap);
+
+        UserDAO userDAO = new UserDAO();
+        RequestDAO requestDAO = new RequestDAO();
+        RequestService service = new RequestService(requestDAO, userDAO);
 
         while (true) {
             System.out.println("\n1 - Додати заявку");
@@ -40,11 +44,7 @@ public class Main {
                     String description = sc.nextLine();
 
                     User user = new User(name, surname, age, email);
-                    Request request = new Request(
-                            Status.NEW,
-                            user,
-                            description
-                    );
+                    Request request = new Request(Status.NEW, user, description);
                     service.addRequest(request);
                     break;
 
@@ -75,7 +75,7 @@ public class Main {
                 case "6":
                     System.out.print("Введіть ID заявки: ");
                     String idToFindReqById = sc.nextLine();
-                    service.getRequestsById(idToFindReqById);
+                        service.getRequestsById(idToFindReqById);
                     break;
 
                 case "0":
